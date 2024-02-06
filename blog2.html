@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love and Other Drugs</title>
+    <style>
+        body {
+            background-color: pink;
+            margin: 0;
+        }
+        p {
+            font-size: 30px;
+            margin: 50px;
+            text-align: center;
+        }
+        .like-section {
+            text-align: center;
+            margin-top: 20px;
+        }
+        #like-btn {
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        #like-btn:hover {
+            background-color: rgb(0, 0, 255);
+            color: white;
+        }
+        #comment-box {
+            width: 80%;
+            margin: 20px auto;
+            padding: 10px;
+        }
+
+        #submit_cmnt {
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 15px;
+            width: 425px;
+        }
+
+        #submit_cmnt:hover {
+            background-color: green;
+        }
+
+        #comment-section {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        #clear-storage {
+            margin: 20px auto;
+            display: block;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        #clear-storage:hover {
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="font-size: 100px; text-align: center;">Love and Other Drugs: Navigating the Complex Landscape of Love and Life</h1>
+    <p>
+
+        
+        "Love and Other Drugs," a film directed by Edward Zwick, serves as a compelling exploration of the intricate interplay between love, intimacy, and the challenges of navigating life's unpredictabilities. Released in 2010, this romantic drama takes a unique approach to the genre, infusing it with elements of comedy and tragedy while delving into the complex realities of relationships. The film's narrative unfolds against the backdrop of the pharmaceutical industry and the harsh realities of living with a chronic illness, offering a poignant commentary on the vulnerabilities inherent in the human experience.
+        
+        
+        
+        At its core, "Love and Other Drugs" revolves around the dynamic relationship between Jamie Randall, played by Jake Gyllenhaal, and Maggie Murdock, portrayed by Anne Hathaway. Set in the mid-1990s, the story unfolds in the competitive world of pharmaceutical sales, where Jamie, a charismatic and charming young man, finds success by selling the newly launched wonder drug, Viagra. His professional success, however, becomes entangled with the unpredictable journey of love when he encounters Maggie, an independent and free-spirited artist.
+        
+      
+        
+        From their initial encounter, Jamie and Maggie share a palpable chemistry that transcends the physical and delves into emotional and intellectual realms. Their relationship begins with a no-strings-attached arrangement, rooted in mutual physical attraction and a shared aversion to commitment. As the narrative unfolds, the film peels back the layers of their characters, revealing vulnerabilities, fears, and past traumas that shape their perspectives on love and relationships.
+        
+      
+        
+        The pharmaceutical backdrop of the film adds a unique layer to the narrative, serving as a metaphor for the commodification of human connection. Jamie's career in pharmaceutical sales becomes a lens through which the film explores the commercialization of intimacy, paralleling the commodification of love in a society driven by consumerism. The juxtaposition of Jamie's professional success and personal struggles highlights the paradoxes inherent in a world where the pursuit of love can be as transactional as a business deal.
+        
+      
+        
+        The film takes a poignant turn when Maggie's health deteriorates, revealing that she is living with early-onset Parkinson's disease. This revelation transforms the dynamics of Jamie and Maggie's relationship, forcing them to confront the fragility of life and the impermanence of love. The portrayal of Maggie's battle with illness adds a layer of depth to the narrative, highlighting the resilience and vulnerability of the human spirit in the face of adversity.
+        
+    
+        
+        As the characters grapple with the complexities of love, "Love and Other Drugs" ultimately portrays love as a transformative force capable of breaking down emotional barriers and fostering personal growth. Jamie's journey from a charming womanizer to a man capable of deep emotional connection mirrors Maggie's evolution from a fiercely independent artist to someone willing to accept love despite the uncertainties that life presents.
+        
+     
+        
+        The film expertly balances moments of humor and heartbreak, capturing the essence of the human experience. The witty banter between Jamie and Maggie provides levity, while the challenges they face inject a sense of realism that resonates with audiences. The humor serves not only as entertainment but as a mechanism for coping with the inherent unpredictabilities of life and love.
+        
+    
+        
+        Edward Zwick's direction and the cinematography by Steven Fierberg contribute to the film's visual appeal. The depiction of the bustling pharmaceutical world, the intimate moments between Jamie and Maggie, and the portrayal of Maggie's struggles with Parkinson's are all visually captivating. The use of color, lighting, and framing enhances the emotional resonance of key scenes, creating a cinematic experience that immerses the audience in the characters' world.
+        
+    
+        
+        The film's musical score, composed by James Newton Howard, complements the emotional beats of the narrative. The music underscores the highs and lows of the characters' journey, enhancing the overall impact of pivotal moments. The soundtrack contributes to the film's emotional depth, creating a symphony that resonates with the themes of love, loss, and the human spirit's capacity for resilience.
+        
+      
+        
+        "Love and Other Drugs" stands as a testament to the complexities of love in the modern world. Through the lens of Jamie and Maggie's relationship, the film explores the transformative power of love, the commodification of human connection, and the resilience of the human spirit in the face of life's uncertainties. With a perfect blend of humor, heartbreak, and poignant storytelling, the film transcends traditional romantic dramas, leaving audiences with a profound reflection on the intricacies of love and the indomitable spirit that propels us forward in the face of life's challenges.</p>
+
+    <div class="like-section">
+        <button id="like-btn" onclick="like()">Like</button>
+        <span id="like-counter">0</span>
+    </div>
+
+    <div id="comment-box">
+        <h2>Leave a Comment</h2>
+        <textarea id="comment-input" rows="4" cols="50"></textarea>
+        <br>
+        <button id="submit_cmnt" onclick="submitComment()">Submit Comment</button>
+    </div>
+
+    <div id="comment-section">
+        <h2>Comments</h2>
+        <ul id="comments-list"></ul>
+    </div>
+
+    <button id="clear-storage" onclick="clearLocalStorage()">Clear Local Storage</button>
+
+    <script>
+        let likeCount = parseInt(localStorage.getItem('likeCount')) || 0;
+
+        function like() {
+            likeCount++;
+            likeCount=likeCount%2;
+            localStorage.setItem('likeCount', likeCount);
+            document.getElementById('like-counter').innerText = likeCount;
+        }
+
+        function submitComment() {
+            const commentInput = document.getElementById('comment-input').value;
+            if (commentInput.trim() !== "") {
+                const commentList = document.getElementById('comments-list');
+                const newComment = document.createElement('li');
+                newComment.textContent = commentInput;
+                commentList.appendChild(newComment);
+                document.getElementById('comment-input').value = "";
+
+                const comments = JSON.parse(localStorage.getItem('comments')) || [];
+                comments.push(commentInput);
+                localStorage.setItem('comments', JSON.stringify(comments));
+            }
+        }
+
+        window.onload = function () {
+            const comments = JSON.parse(localStorage.getItem('comments')) || [];
+            const commentList = document.getElementById('comments-list');
+            comments.forEach(comment => {
+                const newComment = document.createElement('li');
+                newComment.textContent = comment;
+                commentList.appendChild(newComment);
+            });
+
+            document.getElementById('like-counter').innerText = likeCount;
+        };
+
+        // Function to clear local storage
+        function clearLocalStorage() {
+            localStorage.clear();
+            likeCount = 0;
+            document.getElementById('like-counter').innerText = likeCount;
+            const commentList = document.getElementById('comments-list');
+            commentList.innerHTML = '';
+        }
+    </script>
+</body>
+</html>

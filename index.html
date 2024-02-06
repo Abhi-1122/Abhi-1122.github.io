@@ -1,0 +1,129 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Me</title>
+    <script defer src="script.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        
+    </style>
+</head>
+
+<body>
+
+    <div class="flex">
+        <input type="checkbox" id="darkModeToggle" class="toggle-checkbox">
+<label for="darkModeToggle" class="toggle-label">
+    <img class="toggle-image sun" src="https://styles.redditmedia.com/t5_2qon0/styles/communityIcon_1vslp6xt9bw41.jpg?format=pjpg&s=3c7418afba91d128300f2d7ad98a722539a7c9e6" alt="Sun">
+    <img class="toggle-image moon" src="full-moon.jpeg" alt="Moon">
+</label>
+        <div class="button"><a onclick="scrollToSection('education')">Education</a></div>
+        <div class="button"><a onclick="scrollToSection('skills')">Skills</a></div>
+        <div class="button"> <a onclick="scrollToSection('achievements')">Achievements</a></div>
+        <div class="button"> <a href="blogs.html" target="_blank" style="text-decoration: none;" class="blog">Blog</a></div>
+        <div class="button"><a onclick="scrollToSection('about')">About Me</a></div>
+    </div>
+    <a href="https://www.instagram.com/abhishekg_966?igsh=aXBwOThxaWxjZG03" target="_blank" class="fa fa-instagram"></a>
+    <a href="https://github.com/Abhi-1122" target="_blank" class="fa fa-github"></a>
+    <a href="https://www.linkedin.com/in/abhishek-undefined-a9bb6a276/" target="_blank" class="fa fa-linkedin"></a>
+    <a href="mailto:garimella.abhishek@research.iiit.ac.in" target="_blank" class="fa fa-envelope"></a>
+    <img src="rick.jpeg" alt="" class="image3" id="anchor">
+    <div class="eyes">
+        <img src="eye.png" alt="" class="eye" style="top: 41.5%;left: 53%;">
+        <img src="eye.png" alt="" class="eye" style="top: 40%;left: 57%;">
+        <img src="eye.png" alt="" class="eye" style="top: 45%;left: 71%">
+        <img src="eye.png" alt="" class="eye" style="top: 44.3%;left: 75.6%;">
+    </div>
+    <div id="landing" class="">
+        <section>
+            <h1 style="font-size: 85px; font-family: cursive;">Hi,</h1>
+            <h2 class="named">I am G Sai Abhishek</h2>
+        </section>
+    </div>
+
+    <div id="about" class="hidden">
+        <section>
+            <img src="pic2.jpeg" alt="" class="image2">
+            <div class="ab">
+            <h1 style="font-size: 85px; font-style: italic;">About Me</h1>
+            <p class="p">I am G Sai Abhishek,I am currently a first year research student at International Institute of Information Technology pursuing BTech in Computer Science with MSc in Computational Natural Sciences.I am passionate aboute coding and would like to pursue a career along that path.</p>
+            <button class="download-button" onclick="downloadCV()">Download CV</button>
+        </div>
+        </section>
+    </div>
+    <div id="education" class="hidden">
+        <section>
+            <h2 style="text-align: center;">Education</h2>
+            <div class="timeline">
+                <div class="event event1"></div>
+                <div class="event event2"></div>
+                <div class="event event3"></div>
+                <div class="event event4"></div>
+            </div>
+            <div class="flexy">
+                <div class="institute hidden institute-hidden">
+                    <img  src="https://www.indusuniversalschool.com/images/banner1.jpg" class="image imager1">
+                    <div class="hide hider1">
+                        <h1>2011-2018</h1>
+                        <h2>Indus Universal School</h2>
+                    <p>I pursued my early education from 1st-7th class from Indus Universal School,Hyderabad</p></div>
+                </div>
+                
+                <div class="institute hidden institute-hidden">
+                    <img src="https://www.edustoke.com/assets/uploads-new/334e0787-9aa8-4bed-a301-d9015c3a9a4b.jpg" class="image imager2">
+                    <div class="hide hider2"><h1>2018-2021</h1>
+                        <h2>Bethany School</h2>
+                    <p>I completed my education from 8th-10th from Bethany School,Visakhapatnam.I Scored 94.6% in 10th class</p></div>
+                </div>
+                
+                <div class="institute hidden institute-hidden">
+                    <img src="https://directory.edugorilla.com/wp-content/uploads/sites/6/2017/11/v1.jpg" class="image imager3">
+                    <div class="hide hider3"><h1>2021-2023</h1>
+                        <h2>FIITJEE</h2>
+                    <p>I completed my 11th and 12th from FIITJEE,Visakhapatnam.I scored 96.9% in 12th class</p></div>
+                </div>
+                <div class="institute hidden institute-hidden">
+                    <img  src="https://images.shiksha.com/mediadata/images/1600682483phpLyGPwm.jpeg" class="image imager4">
+                    <div class="hide hider4"><h2>2023-Present</h2>
+                        <h3>International Institute of Information Technology,Hyderabad</h3>
+                    <p>I am currently pursuing a BTech in Computer Science + MSc in Computational Natural Sciences from International Institute of Information Technology,Hyderabad</p></div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div id="skills" class="hidden">
+        <section>
+            <h1 style="font-size: 100px; font-style: italic;">Skills</h1>
+            <h2 class="skill C">C</h2>
+            <hr>
+            <h2 class="skill cpp">C++</h2>
+            <hr>
+            <h2 class="skill html">HTML</h2>
+            <hr>
+            <h2 class="skill css">CSS</h2>
+            <hr>
+            <h2 class="skill java">Javascript</h2>
+            <hr>
+            <h2 class="skill py">Python</h2>
+        </section>
+    </div>
+
+    <div id="achievements" class="hidden">
+        <section>
+            <h2 class="head">Achievements</h2>
+            <ul class="list">
+                <li>Secured 99.64%ile in JEE Mains</li>
+                <li>Secured All India Rank 4398 in JEE Advanced</li>
+                <li>Qualified stage 1 of IMO</li>
+                <li>Secured a seat in International Institute of Information Technology,Hyderabad</li>
+            </ul>
+        </section>
+    </div>
+</body>
+
+</html>

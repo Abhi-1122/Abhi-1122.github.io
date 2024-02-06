@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blogs</title>
+    <style>
+        @media only screen and (max-width: 600px) {
+            .blog1,.blog2{
+                width:100%;
+                margin-left: 0px;
+            }
+        }
+        body{
+            background-color: aqua;
+        }
+
+        .blog1{
+    display: grid;
+    place-items: center;
+    margin-top: 100px;
+    margin-left: 80px;
+    border-radius: 15px;
+    border: 2px solid #000;
+    width: 950px;
+    color: #000;
+}
+
+.blog2{
+    display: grid;
+    place-items: center;
+    margin-top: 100px;
+    margin-left: 80px;
+    border-radius: 15px;
+    border: 2px solid #000;
+    width: 950px;
+    color: #000 ;
+}
+
+.blog1:hover{
+    transform: scale(1.1);
+    z-index: 1;
+    border-radius: 10%;
+    background-color: rgb(158, 160, 54);
+    color:rgb(51, 99, 255);
+}
+
+.blog2:hover{
+    transform: scale(1.1);
+    z-index: 1;
+    border-radius: 10%;
+    background-color: rgb(158, 160, 54);
+    color:rgb(51, 99, 255);
+}
+
+.hidden{
+    display:grid;
+    place-items:center;
+    align-items:center;
+    height: 100vh;
+    transition: all 1.5s;
+}
+
+    </style>
+</head>
+<body>
+    <div id="blog" class="hidden">
+        <section>
+            <h2 style="font-size: 100px; text-align: center;">Blogs</h2>
+           <a href="blog1.html" target="_blank" style="text-decoration: none;"><div class="blog1">
+                <h1>Blog 1</h1>
+                <p style="font-size: 30px;">Greatness of Attack on Titan</p>
+            </div></a>
+            <a href="blog2.html" target="_blank" style="text-decoration: none;"><div class="blog2">
+                <h1>Blog 2</h1>
+                <p style="font-size: 30px;">Love and other Drugs</p>
+            </div></a>
+        </section>
+    </div>
+    
+</body>
+</html>

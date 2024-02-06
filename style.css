@@ -1,0 +1,573 @@
+body{
+    margin: 75px;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: beige;
+}
+
+body.dark-mode .sun {
+    display: none;
+}
+
+.blog{
+    color: #000;
+}
+
+.blog:hover{
+    color: white;
+}
+
+.blog.dark-mode{
+    color: #fff;
+}
+
+body:not(.dark-mode) .moon {
+    display: none;
+}
+
+body.dark-mode{
+    background-color: #000000ce;
+    color: #fff;
+}
+
+.p{
+    width: 50%;
+    font-size: 30px;
+}
+
+
+
+.flex{
+    display:flex;
+    flex-direction:row;
+    justify-content: flex-end;
+    transform: translateX(-5%);
+}
+
+.flexy{
+    display:flex;
+    /* grid-template-columns: 350px 350px 350px 350px;
+    grid-template-rows: 300px; */
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.institute {
+    border: 2px solid #000;
+    margin: 10px; 
+    padding: 10px; 
+    /* box-sizing: border-box; */
+}
+
+.institute.dark-mode{
+    border: 2px solid #fff;
+}
+
+.flex > div{
+    justify-items: center;
+    align-items: center;
+}
+
+.hidden{
+    display:grid;
+    place-items:center;
+    align-items:center;
+    height: 100vh;
+    opacity: 0;
+    filter: blur(10px);
+    transform: translateX(-100%);
+    transition: all 1.5s;
+}
+
+.ab{
+
+    display: grid;
+    margin-left: 10%;
+}
+
+/* .image3{
+    transform: scale(0.1);
+    position: absolute;
+    top:10px;
+    left:1%;
+} */
+
+#landing {
+    display: grid;
+    align-items: normal;
+    height: 100vh;
+    margin-top:350px;
+    margin-left: 300px;;
+}
+
+.head{
+    font-size: 100px;
+    font-style: italic;
+}
+
+.list{
+    font-size: 30px;
+}
+
+
+.show{
+    display:grid;
+    place-items:center;
+    align-items:center;
+    height: 100vh;
+    opacity: 1;
+    filter: blur(0px);
+    transform: translateX(0%);
+}
+
+.button{
+    display:grid;
+    place-items:center;
+    align-items:center;
+    width: 150px;
+    height: 30px;
+    border-right : 1px solid rgb(0, 0, 0);
+    /* background-color: #4CAF50; */
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.button.dark-mode{
+    color: white;
+    border-right : 1px solid rgb(255, 255, 255);
+}
+
+.flex > .button:hover{
+    background-color: #4CAF50;
+    color: white;
+}
+
+.hide{
+    position: absolute;
+    z-index:20;
+    top:310px;
+    left:6px;
+    opacity:0;
+}
+
+
+.image{
+    object-fit: cover;
+    transition: transform 0.5s, z-index 0.5s;
+    width: 300px;
+    height: 300px;
+}
+
+.institute:hover .image{
+    transform: scale(1.22);
+    z-index: 1;
+    border: 2px solid #8d7777;
+    border-bottom : 150px solid #8d7777;
+    border-radius: 10px;
+}
+
+.institute:hover .hide {
+    color:rgb(50, 56, 148);
+    opacity: 1;
+}
+
+.hide:hover{
+    color : black;
+}
+
+.institute:nth-child(1){
+    height: 35vh;
+}
+
+.institute:nth-child(2){
+    transition-delay: 200ms;
+    height: 35vh;
+}
+
+.institute:nth-child(3){
+    transition-delay: 400ms;
+    height: 35vh;
+}
+
+.institute:nth-child(4){
+    transition-delay: 600ms;
+    height: 35vh;
+}
+
+.button:last-child{
+    border-right : none;
+}
+
+.timeline {
+    position: relative;
+    margin-top: 20px;
+    width: 100%;
+    height: 2px;
+    background-color: #ddd;
+}
+
+.event {
+    position: absolute;
+    height: 15px;
+    width: 15px;
+    background-color: #3498db;
+    border-radius: 50%;
+    top: -6px;
+    transform: translateX(-50%);
+}
+
+.event1 {
+    left: 13%;
+}
+
+.event2 {
+    left: 37.5%;
+}
+
+.event3 {
+    left: 62.5%;
+}
+
+.event4 {
+    left: 87.5%;
+}
+
+.fa {
+    padding: 20px;
+    font-size: 40px;
+    transform: scale(2);
+    width: 30px;
+    text-align: center;
+    text-decoration: none;
+    margin: 5px 2px;
+    border-radius: 20px;
+    position: fixed;
+    color: black;
+    z-index: 1000;
+}
+
+.fa.dark-mode{
+    color:white;
+}
+
+.fa-instagram {
+    top:650px;
+}
+
+.fa-github{
+    top:725px;
+}
+
+.fa-linkedin{
+    top:800px;
+}
+
+.fa-envelope{
+    top:875px;
+}
+
+.fa:hover {
+    color: #3498db !important;
+    transform: scale(2.5) !important;
+}
+
+.image2{
+    position:absolute;
+    float: right;
+    transform: scale(0.5);
+    top:10px;
+    left:1000px;
+}
+
+.image3 {
+    position: absolute;
+    z-index: -1;
+    top: 139px;
+    left: 850px;;
+    height:87%;
+    border-radius: 100%;
+}
+.eye{
+position: absolute;
+border-radius: 100%;
+}
+
+.C{
+    transform: translateX(-500px);
+}
+.cpp{
+    transform: translateX(-350px);
+}
+.html{
+    transform: translateX(-150px);
+}
+.css{
+    transform: translateX(100px);
+}
+.java{
+    transform: translateX(250px);
+}
+.py{
+    transform: translateX(550px);
+}
+
+.skill{
+    font-size: 90px;
+    margin: 0px;
+}
+
+.skill:hover{
+    opacity: 50%;
+    color:red;
+}
+
+.toggle-checkbox {
+    display: none;
+}
+
+.toggle-label {
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 26px;
+    background-color: #ccc;
+    border-radius: 13px;
+}
+
+.toggle-label:after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 22px;
+    height: 22px;
+    background-color: #fff;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+.toggle-label::before {
+    /* content: url('https://styles.redditmedia.com/t5_2qon0/styles/communityIcon_1vslp6xt9bw41.jpg?format=pjpg&s=3c7418afba91d128300f2d7ad98a722539a7c9e6'); */
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    width: 22px;
+    height: 22px;
+    border-radius: 100%;
+    transition: opacity 0.3s;
+}
+
+.toggle-label::before.dark-mode {
+    content: url('full-moon.jpeg');
+    opacity: 0;
+}
+
+.toggle-checkbox:checked + .toggle-label::before {
+    opacity: 0;
+}
+
+.toggle-checkbox:checked + .toggle-label::before.dark-mode {
+    opacity: 1;
+}
+
+.toggle-checkbox:checked + .toggle-label {
+    background-color: green;
+}
+
+.toggle-checkbox:checked + .toggle-label:after {
+    transform: translateX(24px);
+}
+
+.toggle-image {
+    position: absolute;
+    top: 2px;
+    width: 22px;
+    height: 22px;
+    border-radius: 100%;
+    z-index: 1;
+}
+
+.sun {
+left: 2px;
+}
+
+.moon {
+left: 26px;
+}
+
+.named{
+font-size: 50px;
+color: rgb(131, 85, 26);
+}
+
+.named.dark-mode{
+color:aqua;
+}
+
+
+.download-button {
+    background-color: #4CAF50;
+    color: white; 
+    padding: 15px 30px;
+    font-size: 20px; 
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    margin-top: 20px;
+    width: 25%;
+}
+
+.download-button.dark-mode{
+    background-color: #0011ff;
+}
+
+.download-button:hover {
+    opacity:50%;
+}
+
+@media only screen and (max-width: 600px) {
+    body {
+        margin: 20px;
+    }
+
+    .fa{
+        display: flex;
+        flex-direction: row;
+        position: relative;
+    }
+
+    #landing{
+        margin-top: 100px;
+        margin-left: 65px;
+    }
+
+    #education{
+        margin-top: 500px;
+        margin-bottom: 300%;
+    }
+
+    .head{
+        font-size: 70px;
+    }
+
+    .flex {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .flexy {
+        flex-direction: column;
+    }
+
+    .button {
+        width: 100%;
+        border-right: none;
+        margin-bottom: 10px;
+    }
+
+    .institute {
+        border: 0px solid #000;
+        /* box-sizing: border-box; */
+    }
+
+    .hidden{
+            display:grid;
+            place-items:center;
+            align-items:center;
+            height: 100vh;
+            opacity: 1;
+            filter: blur(0px);
+            transform: translateX(0%);
+        
+    }
+    
+    .flexy{
+        display: relative;
+    }
+
+    .image{
+        z-index: 1;
+    border: 2px solid #8d7777;
+    border-bottom : 150px solid #8d7777;
+    border-radius: 10px;
+    position: relative;
+    top:20%;
+    }
+
+    .imager2{
+        top:45%
+    }
+
+    .imager3{
+        top:68%
+    }
+
+    .imager4{
+        top:90%
+    }
+
+
+    .hide{
+        position: absolute;
+        z-index:20;
+        opacity:1;
+        transform: scale(0.9);
+    }
+
+    .hider1{
+        top: 110%;
+    }
+
+    .hider2{
+        top: 143%;
+    }
+
+    .hider3{
+        top:173%;
+    }
+
+    .hider4{
+        top: 196%;
+        transform: scale(0.8);
+    }
+    
+    .institute.dark-mode{
+        border: 0px solid #fff;
+    }
+
+    .image2 {
+        left:51%;
+        transform: translateX(-50%) scale(0.4);
+        display: relative;
+        top:55%;
+    }
+
+    .image3 {
+        display: none;
+    }
+
+.p{
+    text-align: left;
+    width:100%;
+}
+    .eyes {
+        display: none;
+    }
+
+
+    .download-button {
+        width: 50%;
+    }
+
+    .skill{
+        transform: translateX(0px);
+    }
+
+    #skills{
+        order: 5;
+    }
+}
+

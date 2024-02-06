@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attack on Titan</title>
+    <style>
+        body {
+            background-color: rgba(220, 20, 60, 0.829);
+            margin:0px;
+        }
+        p {
+            font-size: 30px;
+            margin: 50px;
+            text-align: center;
+        }
+        .like-section {
+            text-align: center;
+            margin-top: 20px;
+        }
+        #like-btn {
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        #like-btn:hover {
+            background-color: rgb(0, 0, 255);
+            color: white;
+        }
+        #comment-box {
+            width: 80%;
+            margin: 20px auto;
+            padding: 10px;
+        }
+
+        #submit_cmnt {
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 15px;
+            width: 425px;
+        }
+
+        #submit_cmnt:hover {
+            background-color: green;
+        }
+
+        #comment-section {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        #clear-storage {
+            margin: 20px auto;
+            display: block;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        #clear-storage:hover {
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="font-size: 100px; text-align: center;">The Grandeur of Attack on Titan: A Magnum Opus in the World of Anime</h1>
+    <p>
+        
+        
+        "Attack on Titan," the brainchild of Hajime Isayama, has etched its indelible mark in the annals of anime history as a magnum opus that transcends conventional boundaries. From its gripping narrative and multifaceted characters to its breathtaking animation and profound themes, Attack on Titan stands as a pinnacle of excellence in the anime landscape. In this exploration, we delve into the various facets that contribute to the greatness of Attack on Titan.
+        
+        
+        At the heart of Attack on Titan lies a narrative that unfolds with unprecedented intensity, luring viewers into a meticulously crafted world filled with mystery, intrigue, and unexpected twists. The series introduces us to a society besieged by colossal humanoid creatures known as Titans, pushing humanity to the brink of extinction. The intricate plot weaves together political intrigue, personal vendettas, and existential questions, creating a tapestry that keeps audiences on the edge of their seats.
+        
+        
+        One of the hallmarks of Attack on Titan is its exceptional character development. Isayama masterfully crafts a diverse array of characters, each endowed with a unique personality, motivations, and moral dilemmas. Protagonist Eren Yeager's evolution from a naïve youngster to a complex and morally ambiguous figure mirrors the series' overall exploration of the human condition. The ensemble cast, including Mikasa, Armin, Levi, and others, adds layers to the narrative, making it a rich and emotionally resonant experience.
+        
+        
+        Beyond its action-packed sequences and titanic battles, Attack on Titan explores profound philosophical themes that elevate it to a higher intellectual plane. The series delves into existentialism, free will, the nature of humanity, and the consequences of war. The ambiguity surrounding the morality of characters and the constant questioning of right and wrong imbue the narrative with a depth seldom seen in mainstream anime.
+        
+        
+        Attack on Titan boasts a meticulously crafted world that immerses viewers in its grandeur. The intricacies of the Walls, the oppressive nature of the Marleyan government, and the mysteries surrounding the Titans create a world that is as enthralling as it is expansive. The attention to detail, from the distinct cultures within the Walls to the historical lore that shapes the characters' perspectives, showcases Isayama's commitment to world-building excellence.
+        
+        
+        The animation quality of Attack on Titan is nothing short of breathtaking. Wit Studio and later MAPPA's meticulous attention to detail and fluid animation breathe life into Isayama's vision. The dynamic aerial combat using the 3D Maneuver Gear, the colossal Titan battles, and the nuanced facial expressions of characters contribute to a visually stunning experience. The series manages to balance high-octane action with quiet, contemplative moments, allowing the animation to serve the narrative in a harmonious blend.
+        
+        
+        Hiroyuki Sawano's haunting and evocative soundtrack serves as the sonic soul of Attack on Titan. The music seamlessly complements the emotional beats of the narrative, heightening tension during intense action sequences and underscoring the gravity of pivotal moments. The opening themes, with their powerful vocals and evocative visuals, have become iconic, setting the tone for each season.
+        
+        
+        Attack on Titan has transcended its medium to become a cultural phenomenon. It has captivated audiences worldwide, sparking discussions on social media, in academic circles, and within the broader pop culture landscape. The series' impact extends beyond the realm of anime, influencing fashion, art, and inspiring a dedicated fanbase that continues to grow.
+        
+        
+        While set in a fictional world, Attack on Titan draws parallels to real-world sociopolitical issues. The narrative explores themes of discrimination, authoritarianism, and the consequences of dehumanizing "the other." The struggles of various factions within the story reflect the complexities of our own societal challenges, making the series not only entertaining but also thought-provoking.
+        
+        
+        In the pantheon of anime greatness, Attack on Titan stands as a titan itself, a towering achievement that has left an indelible mark on the medium. From its spellbinding narrative and well-rounded characters to its philosophical depth and visual splendor, the series has redefined the expectations of what anime can achieve. Attack on Titan's legacy is not just as a thrilling action-packed anime but as a cultural touchstone that will continue to resonate with audiences for generations to come.</p>
+
+    <div class="like-section">
+        <button id="like-btn" onclick="like()">Like</button>
+        <span id="like-counter">0</span>
+    </div>
+
+    <div id="comment-box">
+        <h2>Leave a Comment</h2>
+        <textarea id="comment-input" rows="4" cols="50"></textarea>
+        <br>
+        <button id="submit_cmnt" onclick="submitComment()">Submit Comment</button>
+    </div>
+
+    <div id="comment-section">
+        <h2>Comments</h2>
+        <ul id="comments-list"></ul>
+    </div>
+
+    <button id="clear-storage" onclick="clearLocalStorage()">Clear Local Storage</button>
+
+    <script>
+        let likeCount = parseInt(localStorage.getItem('likeCount')) || 0;
+
+        function like() {
+            likeCount++;
+            likeCount=likeCount%2;
+            localStorage.setItem('likeCount', likeCount);
+            document.getElementById('like-counter').innerText = likeCount;
+        }
+
+        function submitComment() {
+            const commentInput = document.getElementById('comment-input').value;
+            if (commentInput.trim() !== "") {
+                const commentList = document.getElementById('comments-list');
+                const newComment = document.createElement('li');
+                newComment.textContent = commentInput;
+                commentList.appendChild(newComment);
+                document.getElementById('comment-input').value = "";
+
+                const comments = JSON.parse(localStorage.getItem('comments')) || [];
+                comments.push(commentInput);
+                localStorage.setItem('comments', JSON.stringify(comments));
+            }
+        }
+
+        window.onload = function () {
+            const comments = JSON.parse(localStorage.getItem('comments')) || [];
+            const commentList = document.getElementById('comments-list');
+            comments.forEach(comment => {
+                const newComment = document.createElement('li');
+                newComment.textContent = comment;
+                commentList.appendChild(newComment);
+            });
+
+            document.getElementById('like-counter').innerText = likeCount;
+        };
+
+        function clearLocalStorage() {
+            localStorage.clear();
+            likeCount = 0;
+            document.getElementById('like-counter').innerText = likeCount;
+            const commentList = document.getElementById('comments-list');
+            commentList.innerHTML = '';
+        }
+    </script>
+</body>
+</html>
