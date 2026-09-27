@@ -26,8 +26,6 @@ export function useGithubRepo(repo) {
       })
       .then((json) => {
         const data = {
-          stars: json.stargazers_count ?? 0,
-          forks: json.forks_count ?? 0,
           description: json.description,
           language: json.language,
         };

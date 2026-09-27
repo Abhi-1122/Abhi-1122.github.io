@@ -2,10 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ───────────── Design tokens ─────────────
+   Screen palettes: 4 shades, --gb-0 = screen paper … --gb-3 = ink (always light → dark in *meaning*,
+   so the backlit "light" palette flips them). --gb-hi = accent used sparingly.
+   Shell: the console plastic. Set via <html data-palette data-shell>. */
 :root {
-  --cyan: #00c3e3;
-}
+  --gb-0: #f8f8f0;
+  --gb-1: #9fb4f0;
+  --gb-2: #4a5ec8;
+  --gb-3: #161630;
+  --gb-hi: #e83040;
 
+  --shell: #c9c7c2;
+  --shell-hi: #dedcd7;
+  --shell-lo: #a8a59f;
+  --shell-ink: #2c2f7a;
+  --bezel: #5f6177;
+  --btn-ab: #a3195b;
+  --btn-ab-lo: #6e0f3c;
+  --dpad: #2a2a2e;
+  --stage-bg: #f7c948;
+  --stage-ink: #efb41c;
+  --stage-a: #e94f37;
+  --stage-b: #2c2f7a;
+}
 * {
   box-sizing: border-box;
 }
@@ -16,87 +36,139 @@ body {
 }
 
 body {
-  -webkit-font-smoothing: antialiased;
+  background-color: var(--stage-bg, #f7c948);
+  transition: background-color 0.5s;
+  -webkit-font-smoothing: none;
+  font-smooth: never;
+  /* pixel arrow cursor */
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 12 12' shape-rendering='crispEdges'%3E%3Cpath d='M0 0h1v1H0zM0 1h2v1H0zM0 2h3v1H0zM0 3h4v1H0zM0 4h5v1H0zM0 5h6v1H0zM0 6h7v1H0zM0 7h4v1H0zM0 8h2v1H0zM3 8h2v1H3zM0 9h1v1H0zM3 9h2v1H3zM4 10h2v1H4z' fill='%230f380f'/%3E%3Cpath d='M1 2h1v1H1zM1 3h2v1H1zM1 4h3v1H1zM1 5h4v1H1zM1 6h2v1H1z' fill='%23fff'/%3E%3C/svg%3E") 0 0, auto;
 }
 
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
+/* ───────── Backdrop: 90s-ad marquee + floating sprites ───────── */
+@keyframes marquee { to { transform: translateX(-50%); } }
+@keyframes float-up {
+  from { transform: translateY(0) rotate(0deg); }
+  to { transform: translateY(-135vh) rotate(var(--spin, 90deg)); }
 }
-.no-scrollbar {
+.marquee-row { animation: marquee var(--dur, 60s) linear infinite; }
+.marquee-row.reverse { animation-direction: reverse; }
+.outline-type { color: transparent; -webkit-text-stroke: 2px var(--stage-ink); }
+.anim-paused * { animation-play-state: paused !important; }
+.float-sprite { animation: float-up var(--dur, 30s) steps(90) infinite; animation-delay: var(--delay, 0s); }
+
+button, a, [role="button"], summary, label {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 12 12' shape-rendering='crispEdges'%3E%3Cpath d='M3 0h2v5h1V3h2v2h1V4h2v7H3V9H1V6h2z' fill='%230f380f'/%3E%3Cpath d='M4 1h0v5h3V4h0v2h2V5h1v5H4V9H2V7h2z' fill='%23fff'/%3E%3C/svg%3E") 7 0, pointer;
+}
+
+/* no visible scrollbars anywhere (scrolling still works) */
+* {
   scrollbar-width: none;
 }
-
-.dashboard-shadow {
-  box-shadow:
-    0 30px 70px -20px rgba(10, 40, 40, 0.45),
-    0 10px 30px -10px rgba(10, 40, 40, 0.3);
+*::-webkit-scrollbar {
+  display: none;
 }
 
-.tile-active-glow {
-  box-shadow:
-    0 0 0 3px rgba(0, 195, 227, 0.25),
-    0 0 26px 4px rgba(0, 195, 227, 0.35),
-    0 18px 30px -12px rgba(0, 0, 0, 0.35);
+/* ───────────── Pixel UI primitives ───────────── */
+
+/* Notched pixel corners */
+.pixel-corners {
+  clip-path: polygon(0 6px, 3px 6px, 3px 3px, 6px 3px, 6px 0, calc(100% - 6px) 0, calc(100% - 6px) 3px, calc(100% - 3px) 3px, calc(100% - 3px) 6px, 100% 6px, 100% calc(100% - 6px), calc(100% - 3px) calc(100% - 6px), calc(100% - 3px) calc(100% - 3px), calc(100% - 6px) calc(100% - 3px), calc(100% - 6px) 100%, 6px 100%, 6px calc(100% - 3px), 3px calc(100% - 3px), 3px calc(100% - 6px), 0 calc(100% - 6px));
 }
 
-.tile-matte {
-  box-shadow:
-    inset 0 1.5px 0 rgba(255, 255, 255, 0.32),
-    inset 0 -12px 18px rgba(0, 0, 0, 0.3),
-    inset 0 0 0 1px rgba(0, 0, 0, 0.12),
-    0 10px 18px -8px rgba(0, 0, 0, 0.4);
+/* RPG dialogue window: double frame */
+.pixel-box {
+  background: var(--gb-0);
+  color: var(--gb-3);
+  border: 3px solid var(--gb-3);
+  box-shadow: inset 0 0 0 3px var(--gb-0), inset 0 0 0 6px var(--gb-2);
+  padding: 14px 16px;
+  image-rendering: pixelated;
 }
 
-.tile-matte-active {
-  box-shadow:
-    inset 0 1.5px 0 rgba(255, 255, 255, 0.32),
-    inset 0 -12px 16px rgba(0, 0, 0, 0.26),
-    inset 0 0 0 1px rgba(0, 0, 0, 0.1),
-    0 0 0 3px rgba(0, 195, 227, 0.25),
-    0 0 26px 4px rgba(0, 195, 227, 0.4),
-    0 20px 32px -12px rgba(0, 0, 0, 0.42);
-}
+/* Raised panel: hard pixel drop shadow */
+.pixel-raised { box-shadow: inset 0 0 0 3px var(--gb-0), inset 0 0 0 6px var(--gb-2), 6px 6px 0 var(--gb-3); }
 
-.glass-divider {
-  background: linear-gradient(160deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.18));
-  -webkit-backdrop-filter: blur(14px) saturate(160%);
-  backdrop-filter: blur(14px) saturate(160%);
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.8),
-    inset 0 -6px 10px rgba(255, 255, 255, 0.25),
-    0 8px 20px -10px rgba(20, 30, 40, 0.35);
+/* Chunky press-down button */
+.pixel-btn {
+  background: var(--gb-0);
+  color: var(--gb-3);
+  border: 3px solid var(--gb-3);
+  box-shadow: 0 4px 0 var(--gb-3);
+  transition: transform 60ms steps(1), box-shadow 60ms steps(1);
 }
+.pixel-btn:hover { background: var(--gb-1); }
+.pixel-btn:active, .pixel-btn[data-pressed="true"] { transform: translateY(4px); box-shadow: 0 0 0 var(--gb-3); }
+.pixel-btn:focus-visible { outline: 3px dashed var(--gb-hi); outline-offset: 3px; }
 
-:root[data-theme="dark"] .glass-divider,
-.dark .glass-divider {
-  background: linear-gradient(160deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.04));
-  border-color: rgba(255, 255, 255, 0.16);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.14),
-    inset 0 -6px 10px rgba(0, 0, 0, 0.25),
-    0 8px 20px -10px rgba(0, 0, 0, 0.5);
+/* Selection caret ▶ that blinks in steps */
+.caret-blink { animation: caret 0.8s steps(1) infinite; }
+@keyframes caret { 50% { opacity: 0; } }
+
+/* LCD: pixel grid + inner shade over a screen area */
+.lcd {
+  background: var(--gb-0);
+  color: var(--gb-3);
 }
-
-.avatar-ring {
-  box-shadow:
-    0 0 0 3px #fff,
-    0 6px 16px rgba(230, 0, 18, 0.35);
-}
-
-.bullet-dot::before {
+.lcd::after {
   content: "";
+  pointer-events: none;
   position: absolute;
-  left: 0;
-  top: 7px;
-  width: 8px;
-  height: 8px;
-  border-radius: 2px;
-  background: var(--cyan);
+  inset: 0;
+  z-index: 50;
+  background:
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.035) 0 1px, transparent 1px 3px);
+  box-shadow: inset 0 0 24px rgba(0, 0, 0, 0.18), inset 0 3px 8px rgba(0, 0, 0, 0.25);
+}
+[data-palette="light"] .lcd::after {
+  background:
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.18) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.12) 0 1px, transparent 1px 3px);
+  box-shadow: inset 0 0 40px rgba(47, 181, 163, 0.25), inset 0 3px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* Console plastic */
+.shell-plastic {
+  background:
+    linear-gradient(180deg, var(--shell-hi) 0%, var(--shell) 18%, var(--shell) 80%, var(--shell-lo) 100%);
+  box-shadow:
+    inset 0 3px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -8px 0 rgba(0, 0, 0, 0.12),
+    0 30px 60px -20px rgba(0, 0, 0, 0.45),
+    0 12px 0 -4px var(--shell-lo);
+}
+
+/* plastic grain + cursor-following sheen (layered over .shell-plastic) */
+.shell-grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .28 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+  opacity: 0.55;
+}
+.shell-sheen {
+  background: radial-gradient(circle at var(--mx, 30%) var(--my, 15%), rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0) 42%);
+  mix-blend-mode: soft-light;
+}
+.pcb { display: none; }
+[data-shell="atomic"] .pcb { display: block; }
+[data-shell="atomic"] .shell-plastic { backdrop-filter: blur(1.5px) saturate(1.2); }
+[data-shell="atomic"] .shell-grain { opacity: 0.25; }
+
+.pixelated { image-rendering: pixelated; }
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.006); }
+}
+.animate-breathe { animation: breathe 5s ease-in-out infinite; }
+
+/* Theme/palette wipe via View Transitions */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .motion-safe-only {
-    animation: none !important;
-  }
+  .marquee-row, .float-sprite { animation: none; }
+  .animate-breathe, .caret-blink { animation: none !important; }
 }

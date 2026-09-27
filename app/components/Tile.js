@@ -33,7 +33,6 @@ export default function Tile({ tile, isActive, onSelect, onHoverSound, size }) {
       onMouseLeave={handleMouseLeave}
       onClick={onSelect}
       onKeyDown={(e) => (e.key === "Enter" ? onSelect() : null)}
-      whileHover={!isActive ? { filter: "brightness(1.08)" } : undefined}
       style={{
         width: size,
         height: size,
@@ -41,28 +40,11 @@ export default function Tile({ tile, isActive, onSelect, onHoverSound, size }) {
         rotateY: isActive ? rotateY : 0,
         transformPerspective: 600,
       }}
-      className={`relative flex cursor-pointer items-center justify-center overflow-hidden rounded-2xl border-4 bg-gradient-to-br ${tile.theme} ${
-        isActive ? "tile-matte-active border-cyan-switch" : "tile-matte border-black/10"
-      }`}
+      className={`pixel-corners relative flex cursor-pointer flex-col items-center justify-center gap-2 border-[3px] border-gb-3 ${isActive ? "bg-gb-0" : "bg-gb-1"}`}
     >
-      <div
-        className="pointer-events-none absolute inset-0"
-        style={{ background: "radial-gradient(120% 90% at 32% 0%, rgba(255,255,255,.4), rgba(255,255,255,0) 55%)" }}
-      />
-      <div
-        className="pointer-events-none absolute inset-0"
-        style={{ background: "linear-gradient(to top, rgba(0,0,0,.28), rgba(0,0,0,0) 42%)" }}
-      />
-      {isActive && (
-        <motion.div
-          className="pointer-events-none absolute inset-0 rounded-2xl"
-          animate={{ boxShadow: ["0 0 0px 0px rgba(0,195,227,.5)", "0 0 22px 4px rgba(0,195,227,.55)", "0 0 0px 0px rgba(0,195,227,.5)"] }}
-          transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
-        />
-      )}
-      <div className="relative z-[2] h-[38%] w-[38%] text-white/95 drop-shadow-md">
-        {Icon ? <Icon className="h-full w-full" /> : null}
-      </div>
+      {isActive && <span className="caret-blink pointer-events-none absolute inset-[5px] border-[3px] border-dashed border-gb-3" />}
+      <div className="relative z-[2] h-[42%] w-[42%] text-gb-3">{Icon ? <Icon className="h-full w-full" /> : null}</div>
+      <span className="relative z-[2] px-2 text-center font-display text-[7px] leading-relaxed sm:text-[8px]">{tile.title.toUpperCase()}</span>
     </motion.div>
   );
 }

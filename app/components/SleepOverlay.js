@@ -1,6 +1,15 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
+import dynamic from "next/dynamic";
 import { AnimatePresence, motion, useAnimationFrame, useMotionValue } from "framer-motion";
+import { useGfx } from "../lib/gfx";
+import Starfield2D from "./three/screensavers/Starfield2D";
+
+const LogoCube = dynamic(() => import("./three/screensavers/LogoCube"), { ssr: false });
+const Starfield = dynamic(() => import("./three/screensavers/Starfield"), { ssr: false });
+const Pipes = dynamic(() => import("./three/screensavers/Pipes"), { ssr: false });
+
+const MODES = ["logo", "starfield", "pipes"];
 
 const START_SPEED = 210;
 
@@ -15,7 +24,8 @@ function getFaces(size) {
   ];
 }
 
-export default function SleepOverlay({ time, onWake }) {
+// DVD-style bouncing cube + name. Real R3F cube when WebGL is on, CSS cube otherwise.
+function BouncingLogo({ use3D }) {
   const groupRef = useRef(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -74,48 +84,55 @@ export default function SleepOverlay({ time, onWake }) {
   });
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.3 }}
-      onClick={onWake}
-      className="fixed inset-0 z-[280] cursor-pointer overflow-hidden bg-black"
-    >
+    <>
       <motion.div ref={groupRef} style={{ position: "absolute", x, y }} className="flex items-center gap-4">
-        <motion.div
-          initial={{ y: -900, rotateX: 0, rotateY: 0, rotateZ: 0, opacity: 0 }}
-          animate={{
-            y: [-900, 0, -26, 0],
-            rotateX: [0, 620, 720, 720],
-            rotateY: phase === "bounce" ? [0, 380, 360, 360, 1080] : [0, 380, 360, 360],
-            rotateZ: [0, -80, 0, 0],
-            opacity: 1,
-          }}
-          transition={
-            phase === "bounce"
-              ? { duration: 5.4, times: [0, 0.11, 0.16, 0.19, 1], ease: ["easeOut", "easeOut", "easeOut", "linear"], repeat: Infinity }
-              : { duration: 1.1, times: [0, 0.6, 0.85, 1], ease: "easeOut" }
-          }
-          style={{ transformStyle: "preserve-3d", perspective: 600 }}
-          className="relative flex-shrink-0"
-        >
-          <div style={{ width: CUBE_SIZE, height: CUBE_SIZE, position: "relative", transformStyle: "preserve-3d" }}>
-            {FACES.map((face, i) => (
-              <div
-                key={i}
-                style={{
-                  position: "absolute",
-                  width: CUBE_SIZE,
-                  height: CUBE_SIZE,
-                  borderRadius: 8,
-                  border: "1px solid rgba(255,255,255,0.15)",
-                  ...face,
-                }}
-              />
-            ))}
-          </div>
-        </motion.div>
+        {use3D ? (
+          <motion.div
+            key="gl"
+            initial={{ y: -900, opacity: 0 }}
+            animate={{ y: [-900, 0, -26, 0], opacity: 1 }}
+            transition={{ duration: 1.1, times: [0, 0.6, 0.85, 1], ease: "easeOut" }}
+            style={{ width: CUBE_SIZE, height: CUBE_SIZE }}
+            className="relative flex-shrink-0"
+          >
+            <LogoCube size={CUBE_SIZE} flash={flash} />
+          </motion.div>
+        ) : (
+          <motion.div
+            key="css"
+            initial={{ y: -900, rotateX: 0, rotateY: 0, rotateZ: 0, opacity: 0 }}
+            animate={{
+              y: [-900, 0, -26, 0],
+              rotateX: [0, 620, 720, 720],
+              rotateY: phase === "bounce" ? [0, 380, 360, 360, 1080] : [0, 380, 360, 360],
+              rotateZ: [0, -80, 0, 0],
+              opacity: 1,
+            }}
+            transition={
+              phase === "bounce"
+                ? { duration: 5.4, times: [0, 0.11, 0.16, 0.19, 1], ease: ["easeOut", "easeOut", "easeOut", "linear"], repeat: Infinity }
+                : { duration: 1.1, times: [0, 0.6, 0.85, 1], ease: "easeOut" }
+            }
+            style={{ transformStyle: "preserve-3d", perspective: 600 }}
+            className="relative flex-shrink-0"
+          >
+            <div style={{ width: CUBE_SIZE, height: CUBE_SIZE, position: "relative", transformStyle: "preserve-3d" }}>
+              {FACES.map((face, i) => (
+                <div
+                  key={i}
+                  style={{
+                    position: "absolute",
+                    width: CUBE_SIZE,
+                    height: CUBE_SIZE,
+                    borderRadius: 8,
+                    border: "1px solid rgba(255,255,255,0.15)",
+                    ...face,
+                  }}
+                />
+              ))}
+            </div>
+          </motion.div>
+        )}
 
         <div className="overflow-hidden">
           <motion.span
@@ -139,9 +156,34 @@ export default function SleepOverlay({ time, onWake }) {
           />
         )}
       </AnimatePresence>
+    </>
+  );
+}
 
-      <div className="absolute bottom-5 left-5 font-mono text-xs text-white/40">{time}</div>
-      <div className="absolute bottom-5 right-5 text-[11px] tracking-wide text-white/40 sm:text-xs">
+// mode: "random" | "logo" | "starfield" | "pipes"
+export default function SleepOverlay({ time, onWake, mode = "random" }) {
+  const { use3D } = useGfx();
+  const [picked] = useState(() => (mode === "random" ? MODES[Math.floor(Math.random() * MODES.length)] : mode));
+  const scene = picked === "pipes" && !use3D ? "logo" : picked;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+      onClick={onWake}
+      className="fixed inset-0 z-[280] cursor-pointer overflow-hidden bg-black"
+    >
+      {scene === "logo" && <BouncingLogo use3D={use3D} />}
+      {scene === "starfield" && (use3D ? <Starfield /> : <Starfield2D />)}
+      {scene === "pipes" && <Pipes />}
+
+      <div className="pointer-events-none absolute bottom-5 left-5">
+        {scene !== "logo" && <div className="text-sm font-bold tracking-[0.2em] text-white/70">ABHISHEK</div>}
+        <div className="font-mono text-xs text-white/40">{time}</div>
+      </div>
+      <div className="pointer-events-none absolute bottom-5 right-5 text-[11px] tracking-wide text-white/40 sm:text-xs">
         Click anywhere or press any key to wake
       </div>
     </motion.div>
