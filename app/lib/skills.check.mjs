@@ -6,8 +6,10 @@ import { SKILL_GROUP_COLORS, tilesForSkill } from "./skills.js";
 const ids = (s) => tilesForSkill(s).map((t) => t.id).sort();
 assert.deepEqual(ids("Go"), ["cuffka"]);
 assert.deepEqual(ids("C"), ["cshell", "docspp", "sham"]); // never "Tailwind CSS"
-assert.deepEqual(ids("C++"), ["hawkes"]); // "C++17"
-assert.deepEqual(ids("C/C++"), ["cshell", "docspp", "hawkes", "sham"]);
+assert.deepEqual(ids("C++"), ["hawkes", "tokengemm"]); // "C++17" and "C++"
+assert.deepEqual(ids("FPGA"), ["tokengemm"]);
+assert.deepEqual(ids("HBM"), ["tokengemm"]); // "HBM2"
+assert.deepEqual(ids("C/C++"), ["cshell", "docspp", "hawkes", "sham", "tokengemm"]);
 assert.ok(ids("React").includes("buysell")); // "React.js"
 assert.ok(ids("React.js").includes("blockdrop")); // "React"
 assert.deepEqual(ids("PyTorch"), ["bharatslm", "research"]);

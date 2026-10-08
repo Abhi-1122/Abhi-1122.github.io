@@ -736,7 +736,28 @@ export const LanguageIcon = sprite([
   "................",
 ]);
 
+// FPGA / accelerator chip: package with pins, die inside
+export const ChipIcon = sprite([
+  "................",
+  "...#.#.#.#.#....",
+  "...#.#.#.#.#....",
+  ".##############.",
+  ".#............#.",
+  "##.##########.##",
+  ".#.#++++++++#.#.",
+  "##.#+######+#.##",
+  ".#.#+#....#+#.#.",
+  "##.#+######+#.##",
+  ".#.#++++++++#.#.",
+  "##.##########.##",
+  ".#............#.",
+  ".##############.",
+  "...#.#.#.#.#....",
+  "...#.#.#.#.#....",
+]);
+
 export const TILE_ICONS = {
+  chip: ChipIcon,
   language: LanguageIcon,
   trendingUp: TrendingUpIcon,
   network: NetworkIcon,

@@ -22,6 +22,7 @@ export const SKILLS = [
   },
   { group: "Web & Backend", items: ["React", "Node.js", "Express.js", "REST APIs", "FastAPI", "Flask", "JWT Auth", "Tailwind CSS", "Streamlit", "Plotly Dash"] },
   { group: "Data & Infra", items: ["MongoDB", "MySQL", "PostgreSQL", "ClickHouse", "OpenTelemetry", "Docker", "Git", "OCR Pipelines"] },
+  { group: "Hardware Acceleration", items: ["FPGA", "Vitis HLS", "HBM", "AXI"] },
   { group: "Quant", items: ["Hawkes Processes", "Market Making", "Low Latency"] },
 ];
 
@@ -44,7 +45,7 @@ export const TILES = [
     label: "G Sai Abhishek · Software Engineer & Researcher",
     period: "Hyderabad, India",
     repo: null,
-    stack: ["Python", "C/C++", "Go", "Distributed Systems", "Machine Learning"],
+    stack: ["Python", "C/C++", "Go", "Distributed Systems", "Machine Learning", "FPGA Acceleration"],
     intro:
       "I'm G Sai Abhishek, a Computer Science undergraduate at IIIT Hyderabad. I like building systems close to the metal: quoting engines, consensus protocols, distributed file systems. When a problem calls for it, I build machine learning pipelines too. I recently interned at CloudNuro, where I designed an LLM model-routing layer, and before that I worked on API observability at Jocata. I also research graph neural networks for gene regulatory network inference, and I help organize Felicity, IIIT Hyderabad's techno-cultural fest.",
     bullets: [
@@ -175,6 +176,25 @@ export const TILES = [
       "Brokers keep append-only partition logs and sync them on every PRODUCE. Key-based routing hashes with FNV-1a, and consumers long-poll FETCH.",
       "Consumer groups rebalance by generation. A join or leave bumps the generation, and heartbeat replies tell members to re-join.",
       "When a broker misses its session timeout, the controller hands its partitions to the least-loaded live broker. I added producer and consumer libraries and an Admin CLI, and 125+ tests pass under the Go race detector.",
+    ],
+  },
+  {
+    id: "tokengemm",
+    category: "project",
+    icon: "chip",
+    theme: "from-[#1a0606] via-[#b3121f] to-[#ff8a3d]",
+    title: "TokenGEMM",
+    label: "FPGA Matrix-Multiply Accelerator for LLM Inference",
+    period: "Sep – Oct 2026",
+    repo: "TokenGEMM",
+    stats: [{ value: 105.5, decimals: 1, label: "Tokens / sec" }, { value: 1713, suffix: "×", label: "Faster than naive (GEMM)" }, { value: 87, suffix: "%", label: "Of compute peak", max: 100 }, { value: 116, label: "GFLOP/s on 768³ GEMM" }],
+    stack: ["LLM Inference", "FPGA", "Low Latency", "Vitis HLS", "C++", "HBM2", "AXI"],
+    bullets: [
+      "Built a Vitis HLS kernel that runs every matrix multiply of a Llama-architecture LLM (llama2.c, TinyStories-15M) on an AMD Alveo U50 FPGA. Dense matrix multiplies run 1,713× faster than a naive HLS kernel, and the model generates 105.5 tokens/s end to end.",
+      "One bitstream holds two datapaths and picks one per call from the shape. Decode (N = 1) is memory bound; batched calls (N > 1) are compute bound.",
+      "Decode streams weights at 10.5 GB/s through a persistent reader, packer, dot-product and writer dataflow that issues every cycle (II = 1).",
+      "Batched calls run two 4×32 outer-product engines at 260 MHz: 256 multiply-adds per cycle, 116 GFLOP/s, 87% of peak. Splitting one big engine in two closed timing.",
+      "Five versions took the 768³ GEMM from 417.5 ms to 7.80 ms, with every output within 5.7 × 10⁻⁵ of an exact reference.",
     ],
   },
   {

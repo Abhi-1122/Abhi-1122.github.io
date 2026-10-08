@@ -787,6 +787,62 @@ function BharatSLM({ active }) {
   );
 }
 
+// ---------- tokengemm: FPGA card, HBM streams into a MAC grid, tokens pop out ----------
+const GEMM_T = 1.3, MAC_P = 0.095, CHIP_X = 0.2, HBM_X = -0.42, LANES = [0.17, -0.17];
+const MACS = Array.from({ length: 16 }, (_, i) => [i % 4, i >> 2]); // [col, row]
+function TokenGEMM({ active }) {
+  const cells = useRef([]), pkts = useRef([]), tok = useRef();
+  useActive(active, (t) => {
+    const u = frac(t / GEMM_T), s = u * 10 - 1.5; // diagonal wavefront sweeps the array
+    cells.current.forEach((m, i) => {
+      const [c, r] = MACS[i], lit = Math.abs(c + (3 - r) - s) < 0.9;
+      m.material = lit ? M.gGreen : M.mid;
+      m.position.z = lit ? 0.19 : 0.175;
+    });
+    pkts.current.forEach((m, i) => {
+      const p = frac(t * 1.6 + (i >> 1) * 0.25 + (i & 1) * 0.5);
+      m.position.x = lerp(HBM_X + 0.1, CHIP_X - 0.31, p);
+      m.scale.setScalar(clamp(Math.min(p, 1 - p) / 0.15, 0, 1));
+    });
+    const q = frac(u - 0.75); // token emerges as the wave finishes
+    tok.current.position.z = 0.17 + 0.4 * ease(Math.min(q / 0.45, 1));
+    tok.current.scale.setScalar(q < 0.15 ? Math.sin((q / 0.15) * 2.1) / 0.86 : clamp((1 - q) / 0.2, 0, 1));
+    tok.current.rotation.z = Math.sin(q * Math.PI) * 0.4;
+  }, GEMM_T * 0.45);
+  return (
+    <group rotation-x={-0.6} position-y={0.04}>
+      <mesh geometry={rbox(1.24, 0.86, 0.08, 0.03)} material={M.ink} />
+      <mesh geometry={rbox(0.78, 0.14, 0.06, 0.02)} material={M.ink} position-y={-0.47} />
+      {[-3, -2, -1, 0, 1, 2, 3].map((k) => (
+        <mesh key={k} geometry={rbox(0.065, 0.11, 0.075, 0.02)} material={M.gold} position={[k * 0.1, -0.48, 0]} />
+      ))}
+      {LANES.map((y, j) => (
+        <group key={j} position-y={y}>
+          <mesh geometry={rbox(0.26, 0.06, 0.02, 0.01)} material={M.gold} position={[(HBM_X + CHIP_X) / 2 - 0.05, 0, 0.045]} />
+          {[0, 1, 2].map((k) => (
+            <mesh key={k} geometry={rbox(0.22, 0.22, 0.06, 0.02)} material={k & 1 ? M.mid : M.cream} position={[HBM_X, 0, 0.07 + k * 0.06]} />
+          ))}
+          {[0, 1].map((k) => (
+            <mesh key={k} ref={(m) => (pkts.current[j * 2 + k] = m)} geometry={rbox(0.07, 0.07, 0.07, 0.02)} material={M.gGreen} position={[HBM_X, 0, 0.1]} />
+          ))}
+        </group>
+      ))}
+      <group position-x={CHIP_X}>
+        <mesh geometry={rbox(0.62, 0.62, 0.05, 0.02)} material={M.mid} position-z={0.065} />
+        <mesh geometry={rbox(0.52, 0.52, 0.06, 0.03)} material={M.cream} position-z={0.12} />
+        <mesh geometry={rbox(0.42, 0.42, 0.02, 0.01)} material={M.ink} position-z={0.155} />
+        {MACS.map(([c, r], i) => (
+          <mesh key={i} ref={(m) => (cells.current[i] = m)} geometry={rbox(0.075, 0.075, 0.03, 0.015)} material={M.mid} position={[(c - 1.5) * MAC_P, (r - 1.5) * MAC_P, 0.175]} />
+        ))}
+        <group ref={tok} position-z={0.5}>
+          <mesh geometry={rbox(0.17, 0.17, 0.17, 0.04)} material={M.white} />
+          <Label text="T" color="#2a2e38" height={0.15} position-z={0.087} />
+        </group>
+      </group>
+    </group>
+  );
+}
+
 // ---------- fallback: "?" item box ----------
 function ItemBox() {
   return (
@@ -818,6 +874,7 @@ const MAP = {
   sham: [Sham],
   buysell: [BuySell, 0.9],
   bharatslm: [BharatSLM],
+  tokengemm: [TokenGEMM],
 };
 export const DIORAMA_IDS = Object.keys(MAP);
 

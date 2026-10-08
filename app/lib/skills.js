@@ -10,6 +10,7 @@ export const SKILL_GROUP_COLORS = {
   "ML & AI": "#1E9E4A",
   "Web & Backend": "#FFE14D",
   "Data & Infra": "#2A4FD6",
+  "Hardware Acceleration": "#E0218A",
   Quant: "#FF9A1F",
 };
 
@@ -24,7 +25,8 @@ const ALIASES = {
   SQL: ["clickhouse"],
   Multithreading: ["pthreads"],
   "Socket Programming": ["networking"],
-  LLMs: ["llm pretraining"],
+  LLMs: ["llm pretraining", "llm inference"],
+  HBM: ["hbm2"],
   "Graph Neural Nets": ["graph neural networks", "gnns"],
   "Contextual Bandits": ["linucb", "thompson sampling"],
   "Off-Policy Eval": ["doubly robust ope"],

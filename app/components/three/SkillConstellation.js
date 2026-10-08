@@ -21,6 +21,7 @@ const SHAPES = [
   <cylinderGeometry args={[0.95, 0.95, 1.2, 6]} />,
   <tetrahedronGeometry args={[1.3, 0]} />,
   <coneGeometry args={[1, 1.5, 5]} />,
+  <torusGeometry args={[0.72, 0.34, 6, 10]} />,
 ];
 
 const GROUPS = SKILLS.map((g, gi) => ({

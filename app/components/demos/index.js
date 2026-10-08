@@ -6,6 +6,7 @@ import AttentionDemo from "./AttentionDemo";
 import ChurnDemo from "./ChurnDemo";
 import MarketDemo from "./MarketDemo";
 import DocsDemo from "./DocsDemo";
+import GemmDemo from "./GemmDemo";
 
 export const DEMOS = {
   cuffka: RaftDemo,
@@ -16,4 +17,5 @@ export const DEMOS = {
   churnsense: ChurnDemo,
   buysell: MarketDemo,
   docspp: DocsDemo,
+  tokengemm: GemmDemo,
 };
